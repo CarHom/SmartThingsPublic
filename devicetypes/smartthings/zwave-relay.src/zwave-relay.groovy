@@ -19,10 +19,11 @@ metadata {
 		capability "Polling"
 		capability "Refresh"
 		capability "Sensor"
+		capability "Health Check"
 		capability "Relay Switch"
 
-		fingerprint deviceId: "0x1001", inClusters: "0x20,0x25,0x27,0x72,0x86,0x70,0x85"
-		fingerprint deviceId: "0x1003", inClusters: "0x25,0x2B,0x2C,0x27,0x75,0x73,0x70,0x86,0x72"
+		fingerprint deviceId: "0x1001", inClusters: "0x20,0x25,0x27,0x72,0x86,0x70,0x85", deviceJoinName: "Switch"
+		fingerprint deviceId: "0x1003", inClusters: "0x25,0x2B,0x2C,0x27,0x75,0x73,0x70,0x86,0x72", deviceJoinName: "Switch"
 	}
 
 	// simulator metadata
@@ -53,6 +54,7 @@ metadata {
 }
 
 def installed() {
+	sendEvent(name: "checkInterval", value: 2 * 15 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
 	zwave.manufacturerSpecificV1.manufacturerSpecificGet().format()
 }
 
@@ -137,6 +139,10 @@ def off() {
 		zwave.basicV1.basicSet(value: 0x00).format(),
 		zwave.switchBinaryV1.switchBinaryGet().format()
 	])
+}
+
+def ping() {
+	poll()
 }
 
 def poll() {

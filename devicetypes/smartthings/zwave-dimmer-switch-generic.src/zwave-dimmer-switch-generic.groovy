@@ -12,7 +12,7 @@
  *
  */
 metadata {
-	definition(name: "Z-Wave Dimmer Switch Generic", namespace: "smartthings", author: "SmartThings", ocfDeviceType: "oic.d.light", runLocally: true, minHubCoreVersion: '000.019.00012', executeCommandsLocally: true) {
+	definition(name: "Z-Wave Dimmer Switch Generic", namespace: "smartthings", author: "SmartThings", ocfDeviceType: "oic.d.switch", runLocally: true, minHubCoreVersion: '000.019.00012', executeCommandsLocally: true, genericHandler: "Z-Wave") {
 		capability "Switch Level"
 		capability "Actuator"
 		capability "Health Check"
@@ -22,25 +22,35 @@ metadata {
 		capability "Sensor"
 		capability "Light"
 
-		fingerprint inClusters: "0x26", deviceJoinName: "Z-Wave Dimmer"
-		fingerprint mfr: "001D", prod: "1902", deviceJoinName: "Z-Wave Dimmer"
-		fingerprint mfr: "001D", prod: "1B03", model: "0334", deviceJoinName: "Leviton Universal Dimmer"
-		fingerprint mfr: "011A", prod: "0102", model: "0201", deviceJoinName: "Enerwave In-Wall Dimmer"
-		fingerprint mfr: "001D", prod: "1001", model: "0334", deviceJoinName: "Leviton 3-Speed Fan Controller"
-		fingerprint mfr: "001D", prod: "0602", model: "0334", deviceJoinName: "Leviton Magnetic Low Voltage Dimmer"
-		fingerprint mfr: "001D", prod: "0401", model: "0334", deviceJoinName: "Leviton 600W Incandescent Dimmer"
-		fingerprint mfr: "0111", prod: "8200", model: "0200", deviceJoinName: "Remotec Technology Plug-In Dimmer"
-		fingerprint mfr: "1104", prod: "001D", model: "0501", deviceJoinName: "Leviton 1000W Incandescant Dimmer"
-		fingerprint mfr: "0039", prod: "5044", model: "3033", deviceJoinName: "Honeywell Z-Wave Plug-in Dimmer (Dual Outlet)"
-		fingerprint mfr: "0039", prod: "5044", model: "3038", deviceJoinName: "Honeywell Z-Wave Plug-in Dimmer"
-		fingerprint mfr: "0039", prod: "4944", model: "3038", deviceJoinName: "Honeywell Z-Wave In-Wall Smart Dimmer"
-		fingerprint mfr: "0039", prod: "4944", model: "3130", deviceJoinName: "Honeywell Z-Wave In-Wall Smart Toggle Dimmer"
-		fingerprint mfr: "0063", prod: "4944", model: "3034", deviceJoinName: "GE In-Wall Smart Fan Control"
-		fingerprint mfr: "0063", prod: "4944", model: "3131", deviceJoinName: "GE In-Wall Smart Fan Control"
-		fingerprint mfr: "0039", prod: "4944", model: "3131", deviceJoinName: "Honeywell Z-Wave Plus In-Wall Fan Speed Control"
-		fingerprint mfr: "001A", prod: "4449", model: "0101", deviceJoinName: "Eaton RF Master Dimmer"
-		fingerprint mfr: "001A", prod: "4449", model: "0003", deviceJoinName: "Eaton RF Dimming Plug-In Module"
-		fingerprint mfr: "0086", prod: "0103", model: "0063", deviceJoinName: "Aeotec Smart Dimmer 6"
+		fingerprint inClusters: "0x26", deviceJoinName: "Dimmer Switch" //Z-Wave Dimmer
+		fingerprint mfr: "001D", prod: "1902", deviceJoinName: "Dimmer Switch" //Z-Wave Dimmer
+		fingerprint mfr: "001D", prod: "3301", model: "0001", deviceJoinName: "Leviton Dimmer Switch" //Leviton Dimmer Switch
+		fingerprint mfr: "001D", prod: "3201", model: "0001", deviceJoinName: "Leviton Dimmer Switch" //Leviton Dimmer Switch
+		fingerprint mfr: "001D", prod: "1B03", model: "0334", deviceJoinName: "Leviton Dimmer Switch" //Leviton Universal Dimmer
+		fingerprint mfr: "011A", prod: "0102", model: "0201", deviceJoinName: "Enerwave Dimmer Switch" //Enerwave In-Wall Dimmer
+		fingerprint mfr: "001D", prod: "0602", model: "0334", deviceJoinName: "Leviton Dimmer Switch" //Leviton Magnetic Low Voltage Dimmer
+		fingerprint mfr: "001D", prod: "0401", model: "0334", deviceJoinName: "Leviton Dimmer Switch" //Leviton 600W Incandescent Dimmer
+		fingerprint mfr: "0111", prod: "8200", model: "0200", deviceJoinName: "Remotec Dimmer Switch", ocfDeviceType: "oic.d.smartplug" //Remotec Technology Plug-In Dimmer
+		fingerprint mfr: "1104", prod: "001D", model: "0501", deviceJoinName: "Leviton Dimmer Switch" //Leviton 1000W Incandescant Dimmer
+		fingerprint mfr: "0039", prod: "5044", model: "3033", deviceJoinName: "Honeywell Dimmer Switch", ocfDeviceType: "oic.d.smartplug" //Honeywell Z-Wave Plug-in Dimmer (Dual Outlet)
+		fingerprint mfr: "0039", prod: "5044", model: "3038", deviceJoinName: "Honeywell Dimmer Switch", ocfDeviceType: "oic.d.smartplug" //Honeywell Z-Wave Plug-in Dimmer
+		fingerprint mfr: "0039", prod: "4944", model: "3038", deviceJoinName: "Honeywell Dimmer Switch" //Honeywell Z-Wave In-Wall Smart Dimmer
+		fingerprint mfr: "0039", prod: "4944", model: "3130", deviceJoinName: "Honeywell Dimmer Switch" //Honeywell Z-Wave In-Wall Smart Toggle Dimmer
+		fingerprint mfr: "001A", prod: "4449", model: "0101", deviceJoinName: "Eaton Dimmer Switch" //Eaton RF Master Dimmer
+		fingerprint mfr: "001A", prod: "4449", model: "0003", deviceJoinName: "Eaton Dimmer Switch", ocfDeviceType: "oic.d.smartplug" //Eaton RF Dimming Plug-In Module
+		fingerprint mfr: "014F", prod: "5744", model: "3530", deviceJoinName: "GoControl Dimmer Switch" //GoControl In-Wall Dimmer
+		fingerprint mfr: "0307", prod: "4447", model: "3034", deviceJoinName: "Satco Dimmer Switch" //Satco In-Wall Dimmer
+		//zw:L type:1101 mfr:0184 prod:4744 model:3032 ver:5.07 zwv:3.95 lib:03 cc:5E,86,72,5A,85,59,73,26,27,70,7A role:05 ff:8600 ui:8600
+		fingerprint mfr: "0184", prod: "4744", model: "3032", deviceJoinName: "Satco Dimmer Switch", ocfDeviceType: "oic.d.smartplug" //Satco Plug-In Dimmer
+		fingerprint mfr: "0330", prod: "0201", model: "D002", deviceJoinName: "RGBgenie Dimmer Switch" //RGBgenie ZW-1001 Z-Wave Dimmer
+		fingerprint mfr: "027A", prod: "B112", model: "1F1C", deviceJoinName: "Zooz Dimmer Switch" //Zooz ZEN22 Dimmer
+		fingerprint mfr: "027A", prod: "A000", model: "A002", deviceJoinName: "Zooz Dimmer Switch" //Zooz ZEN27 Dimmer
+		fingerprint mfr: "027A", prod: "B112", model: "261C", deviceJoinName: "Zooz Dimmer Switch" //Zooz ZEN24 Dimmer
+		fingerprint mfr: "0300", prod: "0003", model: "0005", deviceJoinName: "ilumin Light", ocfDeviceType: "oic.d.light" //ilumin Dimmable Bulb
+		fingerprint mfr: "0312", prod: "FF00", model: "FF04", deviceJoinName: "Minoston Dimmer Switch" //Minoston Smart Dimmer Switch
+		fingerprint mfr: "0312", prod: "FF00", model: "FF02", deviceJoinName: "Minoston Dimmer Switch" //Minoston Toggle Dimmer Switch
+		fingerprint mfr: "0312", prod: "AA00", model: "AA02", deviceJoinName: "Evalogik Dimmer Switch" //Evalogik Smart Dimmer Switch
+		fingerprint mfr: "0312", prod: "C000", model: "C002", deviceJoinName: "Evalogik Dimmer Switch" //Evalogik Smart Plug Dimmer
 	}
 
 	simulator {
@@ -92,10 +102,22 @@ def installed() {
 // Device-Watch simply pings if no device events received for 32min(checkInterval)
 	sendEvent(name: "checkInterval", value: 2 * 15 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
 	def commands = refresh()
-	if (zwaveInfo.mfr.equals("001A")) {
+	if (zwaveInfo?.mfr?.equals("001A")) {
 		commands << "delay 100"
 		//for Eaton dimmers parameter 7 is ramp time. We set it to 1s for devices to work correctly with local execution
 		commands << zwave.configurationV1.configurationSet(configurationValue: [1], parameterNumber: 7, size: 1).format()
+	} else if (isHoneywellDimmer()) {
+		//Set ramp time to 1s for this device to turn off dimmer correctly when current level is over 66.
+		commands << "delay 100"
+		//Parameter 7 - z-wave ramp up/down step size, Parameter 8 - z-wave step interval equals configurationValue times 10 ms
+		commands << zwave.configurationV1.configurationSet(configurationValue: [1], parameterNumber: 7, size: 1).format()
+		commands << "delay 200"
+		commands << zwave.configurationV1.configurationSet(configurationValue: [0, 1], parameterNumber: 8, size: 2).format()
+		commands << "delay 200"
+		//Parameter 7 - manual operation ramp up/down step size, Parameter 8 - z-wave manual operation interval equals configurationValue times 10 ms
+		commands << zwave.configurationV1.configurationSet(configurationValue: [1], parameterNumber: 9, size: 1).format()
+		commands << "delay 200"
+		commands << zwave.configurationV1.configurationSet(configurationValue: [0, 1], parameterNumber: 10, size: 2).format()
 	}
 	response(commands)
 }
@@ -122,7 +144,7 @@ def parse(String description) {
 			result = zwaveEvent(cmd)
 		}
 	}
-	if (result?.name == 'hail' && hubFirmwareLessThan("000.011.00602")) {
+	if (result?.name?.equals('hail') && hubFirmwareLessThan("000.011.00602")) {
 		result = [result, response(zwave.basicV1.basicGet())]
 		log.debug "Was hailed: requesting state update"
 	} else {
@@ -151,7 +173,7 @@ private dimmerEvents(physicalgraph.zwave.Command cmd) {
 	def value = (cmd.value ? "on" : "off")
 	def result = [createEvent(name: "switch", value: value)]
 	if (cmd.value && cmd.value <= 100) {
-		result << createEvent(name: "level", value: cmd.value, unit: "%")
+		result << createEvent(name: "level", value: cmd.value == 99 ? 100 : cmd.value)
 	}
 	return result
 }
@@ -213,7 +235,6 @@ def setLevel(value) {
 	} else {
 		sendEvent(name: "switch", value: "off")
 	}
-	sendEvent(name: "level", value: level, unit: "%")
 	delayBetween([zwave.basicV1.basicSet(value: level).format(), zwave.switchMultilevelV1.switchMultilevelGet().format()], 5000)
 }
 
@@ -246,4 +267,13 @@ def refresh() {
 		commands << zwave.manufacturerSpecificV1.manufacturerSpecificGet().format()
 	}
 	delayBetween(commands, 100)
+}
+
+def isHoneywellDimmer() {
+	zwaveInfo?.mfr?.equals("0039") && (
+		(zwaveInfo?.prod?.equals("5044") && zwaveInfo?.model?.equals("3033")) ||
+			(zwaveInfo?.prod?.equals("5044") && zwaveInfo?.model?.equals("3038")) ||
+			(zwaveInfo?.prod?.equals("4944") && zwaveInfo?.model?.equals("3038")) ||
+			(zwaveInfo?.prod?.equals("4944") && zwaveInfo?.model?.equals("3130"))
+	)
 }

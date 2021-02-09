@@ -23,7 +23,7 @@ metadata {
 
 		command "reset"
 
-		fingerprint deviceId: "0x1104", inClusters: "0x26,0x32,0x27,0x2C,0x2B,0x70,0x85,0x72,0x86", outClusters: "0x82"
+		fingerprint deviceId: "0x1104", inClusters: "0x26,0x32,0x27,0x2C,0x2B,0x70,0x85,0x72,0x86", outClusters: "0x82", deviceJoinName: "Aeon Dimmer Switch"
 	}
 
 	simulator {
@@ -51,7 +51,7 @@ metadata {
 			state "turningOn", label:'${name}', icon:"st.switches.switch.on", backgroundColor:"#00A0DC"
 			state "turningOff", label:'${name}', icon:"st.switches.switch.off", backgroundColor:"#ffffff"
 		}
-		controlTile("levelSliderControl", "device.level", "slider", height: 2, width: 1, inactiveLabel: false) {
+		controlTile("levelSliderControl", "device.level", "slider", height: 2, width: 1, inactiveLabel: false, range:"(0..100)") {
 			state "level", action:"switch level.setLevel"
 		}
 		valueTile("energy", "device.energy", decoration: "flat") {
@@ -106,6 +106,12 @@ def createEvent(physicalgraph.zwave.commands.switchmultilevelv1.SwitchMultilevel
 	result
 }
 
+def createEvent(physicalgraph.zwave.Command cmd) {
+	// Handles all Z-Wave commands we aren't interested in
+	log.debug "Unhandled: ${cmd.toString()}"
+	[:]
+}
+
 def doCreateEvent(physicalgraph.zwave.Command cmd, Map item1) {
 	def result = [item1]
 
@@ -120,7 +126,7 @@ def doCreateEvent(physicalgraph.zwave.Command cmd, Map item1) {
 	if (cmd.value > 15) {
 		def item2 = new LinkedHashMap(item1)
 		item2.name = "level"
-		item2.value = cmd.value as String
+		item2.value = (cmd.value == 99 ? 100 : cmd.value) as String
 		item2.unit = "%"
 		item2.descriptionText = "${item1.linkText} dimmed ${item2.value} %"
 		item2.canBeCurrentState = true

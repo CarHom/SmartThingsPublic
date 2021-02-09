@@ -79,7 +79,7 @@ def zwaveEvent(physicalgraph.zwave.commands.crc16encapv1.Crc16Encap cmd) {
 }
 
 def zwaveEvent(physicalgraph.zwave.Command cmd) {
-	createEvent(isStateChange: true, "$device.displayName: $cmd")
+	createEvent(isStateChange: true, descriptionText: "$device.displayName: $cmd")
 }
 
 def on() {
@@ -100,7 +100,7 @@ private command(physicalgraph.zwave.Command cmd) {
 
 private getDeviceIsSecure() {
 	if (zwaveInfo && zwaveInfo.zw) {
-		return zwaveInfo.zw.endsWith("s")
+		return zwaveInfo.zw.contains("s")
 	} else {
 		return state.sec ? true : false
 	}
